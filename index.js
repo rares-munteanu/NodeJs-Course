@@ -8,7 +8,8 @@ const haskNSA = require("./lib/MrRobot");
 const jwt = require("jsonwebtoken");
 
 const config = {
-    secretKey: "SuperSecretKey",
+    secretKey:
+        "qaRiqjgNVBlaEapLnZJlG0sLFNbm7Ams94UNhSgXIxTDkRz26FkpmrrvHCUDwqyZVOhrljTaKg6RfLjSPHK3bdTE3ccg8VdvwTI8VrzbItg",
 };
 
 app.use(express.json());
@@ -30,37 +31,21 @@ app.get("/hackNSA", async function (req, res) {
         password,
         text,
     });
-
-    // const factRequest =  cat.getFact();
-    // const hack =  hackNSA();
-    // const allData = Promise.all([hack, factRequest]);
-    // allData.then(([{ password }, { text }]) => {
-    //     res.send({
-    //         password,
-    //         text,
-    //     });
-    // });
-
-    // hack.then(({ password }) => {
-    //     res.send(password);
-    // }).catch(() => {
-    //     res.send("Eroare");
-    // });
 });
 
 const authorizationMiddleware = (req, res, next) => {
     const { authorization } = req.headers;
 
     if (!authorization) {
-        res.status(401).sned({
+        res.status(401).send({
             status: "ok",
         });
     } else {
         const jwtToken = authorization.replace("Bearer ", "");
         jwt.verify(jwtToken, config.secretKey, (err, decoded) => {
             if (err) {
-                res.status(401).sned({
-                    status: "ok",
+                res.status(401).send({
+                    status: "not ok",
                 });
             } else {
                 next();
