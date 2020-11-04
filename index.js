@@ -14,25 +14,6 @@ const config = {
 
 app.use(express.json());
 
-app.get("/cat-fact", function (req, res) {
-    const cat = new Cat();
-    cat.getFact().then(body => {
-        const { text } = body;
-        res.send(text);
-    });
-});
-
-app.get("/hackNSA", async function (req, res) {
-    const cat = new Cat();
-    const { text } = await cat.getFact();
-    const { password } = await hackNSA();
-
-    res.send({
-        password,
-        text,
-    });
-});
-
 const authorizationMiddleware = (req, res, next) => {
     const { authorization } = req.headers;
 
